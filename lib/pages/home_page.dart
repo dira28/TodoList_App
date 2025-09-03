@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
+import 'package:todo_list/pages/add_todo_page.dart';
 import 'package:todo_list/widgets/todo_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,6 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Title
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -25,15 +25,10 @@ class HomePage extends StatelessWidget {
                     "Today Tasks",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios, size: 18),
-                  ),
                 ],
               ),
               const SizedBox(height: 16),
 
-              /// List Todo
               Expanded(
                 child: Obx(() {
                   if (todoController.todos.isEmpty) {
@@ -53,7 +48,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
 
-      /// Floating Action Button untuk Tambah Todo
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => AddTodoPage()); 
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
