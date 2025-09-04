@@ -12,47 +12,64 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Today Tasks",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              Expanded(
-                child: Obx(() {
-                  if (todoController.todos.isEmpty) {
-                    return const Center(child: Text("Belum ada tugas"));
-                  }
-                  return ListView.builder(
-                    itemCount: todoController.todos.length,
-                    itemBuilder: (context, index) {
-                      final todo = todoController.todos[index];
-                      return TodoCard(todo: todo);
-                    },
-                  );
-                }),
-              ),
-            ],
+      backgroundColor: Colors.lightBlueAccent,
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0,
+        title: const Text(
+          "Today Tasks",
+          style: TextStyle(
+            fontSize: 25,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => AddTodoPage()); 
-        },
-        child: const Icon(Icons.add),
+      body: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Obx(() {
+          if (todoController.todos.isEmpty) {
+            return const Center(
+              child: Text(
+                "Belum ada tugas",
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: todoController.todos.length,
+            itemBuilder: (context, index) {
+              final todo = todoController.todos[index];
+              return TodoCard(todo: todo);
+            },
+          );
+        }),
+      ),
+
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 45, right: 20),
+        child: FloatingActionButton(
+          backgroundColor: Colors.teal.shade600,
+          onPressed: () {
+            Get.to(() => AddTodoPage());
+          },
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
     );
   }
