@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 45, right: 20),
         child: FloatingActionButton(
-          backgroundColor: Colors.teal.shade600,
+          backgroundColor: Colors.blue.shade600,
           onPressed: () {
             Get.to(() => AddTodoPage());
           },

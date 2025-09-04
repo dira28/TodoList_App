@@ -21,7 +21,7 @@ class TodoController extends GetxController {
         title: "Belajar Flutter",
         description: "Kerjain project Todo App",
         category: "Study",
-        startTime: "08:00",
+        startTime: "08:40",
         endTime: "10:00",
       ),
       TodoModel(
@@ -49,8 +49,8 @@ class TodoController extends GetxController {
     final doneTodo = todos[index];
     doneTodo.isDone = true;
 
-    history.add(doneTodo); 
-    todos.removeAt(index); 
+    history.add(doneTodo);
+    todos.removeAt(index);
   }
 
   void deleteTodo(TodoModel todo) {

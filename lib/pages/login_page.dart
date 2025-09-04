@@ -36,7 +36,7 @@ class LoginPage extends StatelessWidget {
                 Icon(
                   Icons.task_alt_rounded,
                   size: 70,
-                  color: Colors.teal.shade600,
+                  color: Colors.blue.shade800,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal.shade700,
+                    color: Colors.blue.shade800,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -57,6 +57,7 @@ class LoginPage extends StatelessWidget {
                 CustomTextField(
                   textEditingController: authController.emailController,
                   hintText: "Enter Email",
+                  prefixIcon: Icons.person,
                 ),
                 const SizedBox(height: 20),
 
@@ -64,10 +65,10 @@ class LoginPage extends StatelessWidget {
                   textEditingController: authController.passwordController,
                   hintText: "Enter Password",
                   obscureText: true,
+                  prefixIcon: Icons.lock,
                 ),
 
                 const SizedBox(height: 35),
-
                 CustomButton(
                   text: "Login",
                   textColor: Colors.white,
