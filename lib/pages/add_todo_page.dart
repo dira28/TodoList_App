@@ -72,7 +72,7 @@ class AddTodoPage extends StatelessWidget {
                   onPressed: () {
                     todoController.saveTodo();
                   },
-                  child: const Text("Simpan"),
+                  child: const Text("Save"),
                 ),
               ),
             ],

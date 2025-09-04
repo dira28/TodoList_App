@@ -30,7 +30,7 @@ class HistoryPage extends StatelessWidget {
               Expanded(
                 child: Obx(() {
                   if (todoController.history.isEmpty) {
-                    return const Center(child: Text("Belum ada history"));
+                    return const Center(child: Text("There is no history yet"));
                   }
 
                   return ListView.builder(
