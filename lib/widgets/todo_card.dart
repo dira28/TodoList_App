@@ -27,7 +27,6 @@ class TodoCard extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            todoController.history.add(todo);
             todoController.todos.remove(todo);
             Get.back();
           },

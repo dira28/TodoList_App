@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
 import 'package:todo_list/widgets/widget_textfield.dart';
+import 'package:todo_list/widgets/widget_button.dart';
 
 class AddTodoPage extends StatelessWidget {
   AddTodoPage({super.key});
@@ -38,6 +39,7 @@ class AddTodoPage extends StatelessWidget {
               ),
               const SizedBox(height: 22),
 
+              // Description
               CustomTextField(
                 textEditingController: todoController.descriptionController,
                 hintText: "Description",
@@ -53,9 +55,19 @@ class AddTodoPage extends StatelessWidget {
                       : todoController.selectedCategory.value,
                   decoration: InputDecoration(
                     labelText: "Category",
-                    border: OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.lightBlueAccent),
+                      borderSide: BorderSide(
+                        color: Colors.blueAccent,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.blueAccent,
+                        width: 2,
+                      ),
                     ),
                   ),
                   items: categories
@@ -70,11 +82,11 @@ class AddTodoPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Start Time
               CustomTextField(
                 textEditingController: todoController.startTimeController,
                 hintText: "Start Time",
                 readOnly: true,
+                prefixIcon: Icons.lock_clock,
                 onTap: () async {
                   final pickedDate = await showDatePicker(
                     context: context,
@@ -100,7 +112,6 @@ class AddTodoPage extends StatelessWidget {
                     }
                   }
                 },
-                prefixIcon: Icons.lock_clock,
               ),
               const SizedBox(height: 16),
 
@@ -108,6 +119,7 @@ class AddTodoPage extends StatelessWidget {
                 textEditingController: todoController.endTimeController,
                 hintText: "End Time",
                 readOnly: true,
+                prefixIcon: Icons.lock_clock,
                 onTap: () async {
                   final pickedDate = await showDatePicker(
                     context: context,
@@ -133,20 +145,16 @@ class AddTodoPage extends StatelessWidget {
                     }
                   }
                 },
-                prefixIcon: Icons.lock_clock,
               ),
               const SizedBox(height: 24),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlueAccent,
-                  ),
+              Center(
+                child: CustomButton(
+                  text: "Save",
+                  textColor: Colors.white,
                   onPressed: () {
                     todoController.saveTodo();
                   },
-                  child: const Text("Save", style: TextStyle(fontSize: 16)),
                 ),
               ),
             ],

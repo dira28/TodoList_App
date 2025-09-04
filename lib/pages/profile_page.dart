@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/routes/routes.dart';
+import 'package:todo_list/widgets/widget_button.dart';
 
 class ProfileItem extends StatelessWidget {
   final IconData icon;
@@ -17,45 +18,14 @@ class ProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.lightBlue.shade50,
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: ListTile(
-        leading: Icon(icon, color: Colors.lightBlueAccent),
+        leading: Icon(icon, color: Colors.blue),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final String text;
-  final Color backgroundColor;
-  final VoidCallback onPressed;
-
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.backgroundColor,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(text, style: const TextStyle(fontSize: 16)),
       ),
     );
   }
@@ -135,9 +105,8 @@ class ProfilePage extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               const SizedBox(height: 24),
-              const SizedBox(height: 12),
 
-              // List of profile info using reusable ProfileItem
+              // Profile items
               const ProfileItem(
                 icon: Icons.person,
                 title: "Username",
@@ -156,10 +125,9 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // Logout button
               CustomButton(
                 text: "Logout",
-                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
                 onPressed: () => showLogoutDialog(context),
               ),
             ],
