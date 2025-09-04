@@ -12,57 +12,71 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.deepPurple,
-      //   title: Text(
-      //     "Login Page",
-      //     style: TextStyle(fontSize: 25, color: (Colors.white)),
-      //   ),
-      // ),
-      
-      body: Container(
-        margin: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 100),
-
-            Center(
-              child: Text(
-                "Todo List",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: (Colors.black),
-                  fontWeight: FontWeight.bold,
+      backgroundColor: Colors.lightBlueAccent,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            padding: const EdgeInsets.all(28),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: const Offset(0, 5),
                 ),
-              ),
+              ],
             ),
-            SizedBox(height: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.task_alt_rounded,
+                  size: 70,
+                  color: Colors.blue.shade800,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "Todo List",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue.shade800,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "Login to your account",
+                  style: TextStyle(fontSize: 15, color: Colors.black54),
+                ),
+                const SizedBox(height: 30),
 
-            Center(child: Text("Login to your account")),
-            Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: CustomTextField(
-                textEditingController: authController.emailController,
-                hintText: "Input Email",
-              ),
-            ),
-            CustomTextField(
-              textEditingController: authController.passwordController,
-              hintText: "Password",
-              obscureText: true,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Center(
-                child: CustomButton(
+                CustomTextField(
+                  textEditingController: authController.emailController,
+                  hintText: "Enter Email",
+                  prefixIcon: Icons.person,
+                ),
+                const SizedBox(height: 20),
+
+                CustomTextField(
+                  textEditingController: authController.passwordController,
+                  hintText: "Enter Password",
+                  obscureText: true,
+                  prefixIcon: Icons.lock,
+                ),
+
+                const SizedBox(height: 35),
+                CustomButton(
                   text: "Login",
                   textColor: Colors.white,
-                  onPressed: () => authController.login()
+                  onPressed: () => authController.login(),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
