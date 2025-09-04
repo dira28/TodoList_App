@@ -9,6 +9,38 @@ class TodoCard extends StatelessWidget {
 
   TodoCard({super.key, required this.todo});
 
+  void showDeleteDialog(BuildContext context) {
+    Get.defaultDialog(
+      title: "Delete Todo",
+      middleText: "Are you sure you want to delete this task?",
+      backgroundColor: Colors.white,
+      titleStyle: const TextStyle(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.bold,
+      ),
+      middleTextStyle: const TextStyle(color: Colors.black87),
+      radius: 10,
+      actions: [
+        TextButton(
+          onPressed: () => Get.back(),
+          child: const Text("No", style: TextStyle(color: Colors.black54)),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            todoController.history.add(todo);
+            todoController.todos.remove(todo);
+            Get.back();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue.shade800,
+            foregroundColor: Colors.white,
+          ),
+          child: const Text("Yes"),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,24 +78,22 @@ class TodoCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200, // abu muda bg
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         todo.category,
                         style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.grey, 
+                          color: Colors.grey,
                         ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 4),
-
                 Text(todo.description),
                 const SizedBox(height: 4),
-
                 Text(
                   "${todo.startTime} - ${todo.endTime}",
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
@@ -80,7 +110,7 @@ class TodoCard extends StatelessWidget {
                   todoController.markAsDone(index);
                 }
               } else if (value == 'delete') {
-                todoController.deleteTodo(todo);
+                showDeleteDialog(context);
               }
             },
             itemBuilder: (context) => [

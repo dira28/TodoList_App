@@ -14,7 +14,14 @@ class AddTodoPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Add Todo"),
+        title: const Text(
+          "Add Todo",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
         backgroundColor: Colors.lightBlueAccent,
         centerTitle: true,
       ),
@@ -29,7 +36,7 @@ class AddTodoPage extends StatelessWidget {
                 hintText: "Title",
                 prefixIcon: Icons.title,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 22),
 
               CustomTextField(
                 textEditingController: todoController.descriptionController,

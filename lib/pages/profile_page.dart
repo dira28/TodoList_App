@@ -2,10 +2,68 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/routes/routes.dart';
 
+class ProfileItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  const ProfileItem({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.lightBlueAccent),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(subtitle),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final VoidCallback onPressed;
+
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.backgroundColor,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(text, style: const TextStyle(fontSize: 16)),
+      ),
+    );
+  }
+}
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  // Fungsi untuk menampilkan dialog konfirmasi logout
   void showLogoutDialog(BuildContext context) {
     Get.defaultDialog(
       title: "Logout",
@@ -16,19 +74,19 @@ class ProfilePage extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
       middleTextStyle: const TextStyle(color: Colors.black87),
-      radius: 10,
+      radius: 12,
       actions: [
         TextButton(
-          onPressed: () => Get.back(), // Tutup dialog
+          onPressed: () => Get.back(),
           child: const Text("No", style: TextStyle(color: Colors.blueAccent)),
         ),
         ElevatedButton(
           onPressed: () {
-            Get.back(); // Tutup dialog
-            Get.offAllNamed(AppRoutes.login); // Redirect ke halaman login
+            Get.back();
+            Get.offAllNamed(AppRoutes.login);
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
+            backgroundColor: Colors.blue.shade600,
             foregroundColor: Colors.white,
           ),
           child: const Text("Yes"),
@@ -40,17 +98,26 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "Profile",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Profile",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               const CircleAvatar(
                 radius: 60,
                 backgroundImage: NetworkImage(
@@ -60,40 +127,40 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 16),
               const Text(
                 "Dira",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               const Text(
                 "dira@gmail.com",
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              const SizedBox(height: 32),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.person, color: Colors.blueAccent),
-                title: const Text("Username"),
-                subtitle: const Text("Dira Mayzaro Dekantari"),
-              ),
-              ListTile(
-                leading: const Icon(Icons.email, color: Colors.blueAccent),
-                title: const Text("Email"),
-                subtitle: const Text("dira@gmail.com"),
-              ),
-              ListTile(
-                leading: const Icon(Icons.phone, color: Colors.blueAccent),
-                title: const Text("Phone"),
-                subtitle: const Text("0812-3456-7890"),
-              ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  showLogoutDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text("Logout"),
+              const SizedBox(height: 12),
+
+              // List of profile info using reusable ProfileItem
+              const ProfileItem(
+                icon: Icons.person,
+                title: "Username",
+                subtitle: "Dira Mayzaro Dekantari",
+              ),
+              const ProfileItem(
+                icon: Icons.email,
+                title: "Email",
+                subtitle: "dira@gmail.com",
+              ),
+              const ProfileItem(
+                icon: Icons.phone,
+                title: "Phone",
+                subtitle: "0812-3456-7890",
+              ),
+
+              const SizedBox(height: 24),
+
+              // Logout button
+              CustomButton(
+                text: "Logout",
+                backgroundColor: Colors.redAccent,
+                onPressed: () => showLogoutDialog(context),
               ),
             ],
           ),
