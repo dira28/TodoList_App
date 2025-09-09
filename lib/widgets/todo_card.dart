@@ -11,32 +11,25 @@ class TodoCard extends StatelessWidget {
 
   void showDeleteDialog(BuildContext context) {
     Get.defaultDialog(
-      title: "Delete Todo",
-      middleText: "Are you sure you want to delete this task?",
-      backgroundColor: Colors.white,
-      titleStyle: const TextStyle(
-        color: Colors.blueAccent,
-        fontWeight: FontWeight.bold,
-      ),
-      middleTextStyle: const TextStyle(color: Colors.black87),
-      radius: 10,
-      actions: [
-        TextButton(
-          onPressed: () => Get.back(),
-          child: const Text("No", style: TextStyle(color: Colors.black54)),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            todoController.todos.remove(todo);
-            Get.back();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue.shade800,
-            foregroundColor: Colors.white,
-          ),
-          child: const Text("Yes"),
-        ),
-      ],
+      title: "Delete Task",
+      middleText: "Are you sure you want to delete this Task?",
+      textCancel: "No",
+      textConfirm: "Yes",
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.blueAccent,
+      onConfirm: () {
+        todoController.deleteTodo(todo);
+        Get.back();
+        Get.snackbar(
+          "Deleted",
+          "Task item has been deleted",
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 1),
+        );
+      },
+      onCancel: () {},
     );
   }
 
@@ -50,7 +43,7 @@ class TodoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha(1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -104,17 +97,13 @@ class TodoCard extends StatelessWidget {
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'done') {
-                final index = todoController.todos.indexOf(todo);
-                if (index != -1) {
-                  todoController.markAsDone(index);
-                }
+                todoController.markAsDone(todo);
               } else if (value == 'delete') {
                 showDeleteDialog(context);
               }
             },
             itemBuilder: (context) => [
-              if (!todo.isDone)
-                const PopupMenuItem(value: 'done', child: Text("Mark as Done")),
+              const PopupMenuItem(value: 'done', child: Text("Mark as Done")),
               const PopupMenuItem(value: 'delete', child: Text("Delete")),
             ],
           ),

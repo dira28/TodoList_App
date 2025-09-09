@@ -45,12 +45,9 @@ class TodoController extends GetxController {
     todos.add(todo);
   }
 
-  void markAsDone(int index) {
-    final doneTodo = todos[index];
-    doneTodo.isDone = true;
-
-    history.add(doneTodo);
-    todos.removeAt(index);
+  void markAsDone(TodoModel todo) { 
+    history.add(todo);
+    todos.remove(todo);
   }
 
   void deleteTodo(TodoModel todo) {
@@ -67,7 +64,7 @@ class TodoController extends GetxController {
           description: descriptionController.text,
           category: selectedCategory.value,
           startTime: startTimeController.text,
-          endTime: endTimeController.text,
+          endTime: endTimeController.text,    
         ),
       );
 

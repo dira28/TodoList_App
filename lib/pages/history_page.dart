@@ -14,7 +14,7 @@ class HistoryPage extends StatelessWidget {
       textCancel: "No",
       textConfirm: "Yes",
       confirmTextColor: Colors.white,
-      buttonColor: Colors.redAccent,
+      buttonColor: Colors.blueAccent,
       onConfirm: () {
         todoController.history.removeAt(index);
         Get.back();
@@ -24,6 +24,7 @@ class HistoryPage extends StatelessWidget {
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 1),
         );
       },
       onCancel: () {},
