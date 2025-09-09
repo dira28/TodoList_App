@@ -23,8 +23,7 @@ class TodoCard extends StatelessWidget {
         Get.snackbar(
           "Deleted",
           "Task item has been deleted",
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
+          colorText: Colors.black,
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 1),
         );

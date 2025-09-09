@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
-import 'package:todo_list/pages/add_todo_page.dart';
 import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/todo_card.dart';
 
@@ -47,7 +46,7 @@ class HomePage extends StatelessWidget {
           if (todoController.todos.isEmpty) {
             return const Center(
               child: Text(
-                "There's no task yet",
+                "There's no tasks yet",
                 style: TextStyle(fontSize: 16, color: Colors.black54),
               ),
             );
