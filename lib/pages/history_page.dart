@@ -7,6 +7,30 @@ class HistoryPage extends StatelessWidget {
   HistoryPage({super.key});
   final todoController = Get.find<TodoController>();
 
+  void _showDeleteDialog(BuildContext context, int index) {
+    Get.defaultDialog(
+      title: "Delete History",
+      middleText: "Are you sure you want to delete this history?",
+      textCancel: "No",
+      textConfirm: "Yes",
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.blueAccent,
+      onConfirm: () {
+        todoController.history.removeAt(index);
+        Get.back();
+        Get.snackbar(
+          "Deleted",
+          "History item has been deleted",
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 1),
+        );
+      },
+      onCancel: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +72,7 @@ class HistoryPage extends StatelessWidget {
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade50, // background biru soft
+                          color: Colors.blue.shade50,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.blue.shade100),
                         ),
@@ -68,22 +92,14 @@ class HistoryPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
+                                // 🔽 Icon Delete
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.redAccent,
                                   ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue.shade100,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Text(
-                                    todo.category,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
+                                  onPressed: () =>
+                                      _showDeleteDialog(context, index),
                                 ),
                               ],
                             ),

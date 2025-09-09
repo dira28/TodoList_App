@@ -6,16 +6,21 @@ class AuthController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() {
-    if (emailController.text == 'admin' &&
-        passwordController.text == 'admin') {
-           Get.offAllNamed(AppRoutes.dashboard); 
-    } else {
-      Get.snackbar(
-        "Error",
-        "Email atau password salah",
-        snackPosition: SnackPosition.TOP,
-      );
-    }
+ void login() {
+  if (emailController.text == 'admin' && passwordController.text == 'admin') {
+    Get.offAllNamed(AppRoutes.dashboard);
+    Get.snackbar(
+      "Login Successful",
+      "Welcome back! You have successfully signed in.",
+      snackPosition: SnackPosition.TOP,
+    );
+  } else {
+    Get.snackbar(
+      "Login Failed",
+      "The email or password you entered is incorrect. Please try again.",
+      snackPosition: SnackPosition.TOP,
+    );
   }
+}
+
 }

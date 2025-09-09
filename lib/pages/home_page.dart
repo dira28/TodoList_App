@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
 import 'package:todo_list/pages/add_todo_page.dart';
+import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/todo_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
           if (todoController.todos.isEmpty) {
             return const Center(
               child: Text(
-                "Belum ada tugas",
+                "There's no task yet",
                 style: TextStyle(fontSize: 16, color: Colors.black54),
               ),
             );
@@ -66,7 +67,7 @@ class HomePage extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.blue.shade600,
           onPressed: () {
-            Get.to(() => AddTodoPage());
+            Get.toNamed(AppRoutes.addTodo);
           },
           child: const Icon(Icons.add, color: Colors.white),
         ),
