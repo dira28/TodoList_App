@@ -21,8 +21,7 @@ class HistoryPage extends StatelessWidget {
         Get.snackbar(
           "Deleted",
           "History item has been deleted",
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
+          colorText: Colors.black,
           snackPosition: SnackPosition.TOP,
           duration: const Duration(seconds: 1),
         );
@@ -96,7 +95,6 @@ class HistoryPage extends StatelessWidget {
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete,
-                                    color: Colors.redAccent,
                                   ),
                                   onPressed: () =>
                                       _showDeleteDialog(context, index),

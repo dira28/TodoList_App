@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
-import 'package:todo_list/pages/add_todo_page.dart';
 import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/todo_card.dart';
 
@@ -13,14 +12,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         elevation: 0,
         title: const Text(
           "Today Tasks",
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -28,50 +28,34 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
       ),
 
-      body: Container(
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 8,
-              spreadRadius: 2,
-              offset: const Offset(0, 4),
+      body: Obx(() {
+        if (todoController.todos.isEmpty) {
+          return const Center(
+            child: Text(
+              "There's no tasks yet",
+              style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
-          ],
-        ),
-        child: Obx(() {
-          if (todoController.todos.isEmpty) {
-            return const Center(
-              child: Text(
-                "There's no task yet",
-                style: TextStyle(fontSize: 16, color: Colors.black54),
-              ),
-            );
-          }
-          return ListView.builder(
-            itemCount: todoController.todos.length,
-            itemBuilder: (context, index) {
-              final todo = todoController.todos[index];
-              return TodoCard(todo: todo);
-            },
           );
-        }),
-      ),
+        }
 
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 45, right: 20),
-        child: FloatingActionButton(
-          backgroundColor: Colors.blue.shade600,
-          onPressed: () {
-            Get.toNamed(AppRoutes.addTodo);
+        return ListView.builder(
+          padding: const EdgeInsets.all(16), 
+          itemCount: todoController.todos.length,
+          itemBuilder: (context, index) {
+            final todo = todoController.todos[index];
+            return TodoCard(todo: todo);
           },
-          child: const Icon(Icons.add, color: Colors.white),
-        ),
+        );
+      }),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue.shade600,
+        onPressed: () {
+          Get.toNamed(AppRoutes.addTodo);
+        },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

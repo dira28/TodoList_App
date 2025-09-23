@@ -38,30 +38,23 @@ class ProfilePage extends StatelessWidget {
     Get.defaultDialog(
       title: "Logout",
       middleText: "Are you sure you want to exit?",
-      backgroundColor: Colors.white,
-      titleStyle: const TextStyle(
-        color: Colors.blueAccent,
-        fontWeight: FontWeight.bold,
-      ),
-      middleTextStyle: const TextStyle(color: Colors.black87),
+      textCancel: "No",
+      textConfirm: "Yes",
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.blueAccent,
       radius: 12,
-      actions: [
-        TextButton(
-          onPressed: () => Get.back(),
-          child: const Text("No", style: TextStyle(color: Colors.blueAccent)),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Get.back();
-            Get.offAllNamed(AppRoutes.login);
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue.shade600,
-            foregroundColor: Colors.white,
-          ),
-          child: const Text("Yes"),
-        ),
-      ],
+      onConfirm: () {
+        Get.back();
+        Get.offAllNamed(AppRoutes.login);
+        Get.snackbar(
+          "Logged Out",
+          "You have successfully logged out",
+          colorText: Colors.black,
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 2),
+        );
+      },
+      onCancel: () {},
     );
   }
 
