@@ -6,9 +6,8 @@ import '../pages/add_todo_page.dart';
 import '../pages/edit_todo_page.dart';
 
 class HomePage extends StatelessWidget {
-  final todoController = Get.find<TodoController>();
-
   HomePage({super.key});
+  final todoController = Get.find<TodoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class HomePage extends StatelessWidget {
             if (todoController.todos.isEmpty) {
               return const Center(
                 child: Text(
-                  "Belum ada tugas",
+                  "No tasks yet",
                   style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),
               );

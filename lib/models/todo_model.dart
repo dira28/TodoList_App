@@ -5,7 +5,7 @@ class TodoModel {
   String category;
   String startTime;
   String endTime;
-  bool isDone;
+
 
   TodoModel({
     this.id,
@@ -14,6 +14,5 @@ class TodoModel {
     required this.category,
     required this.startTime,
     required this.endTime,
-    this.isDone = false,
   });
 }

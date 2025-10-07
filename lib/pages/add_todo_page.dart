@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/todo_controller.dart';
 import '../widgets/widget_textfield.dart';
+import '../widgets/widget_button.dart';
 
 class AddTodoPage extends StatelessWidget {
   AddTodoPage({super.key});
@@ -12,7 +13,19 @@ class AddTodoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Todo")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          "Add Todo",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        backgroundColor: Colors.lightBlueAccent,
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -22,13 +35,15 @@ class AddTodoPage extends StatelessWidget {
               CustomTextField(
                 textEditingController: todoController.titleController,
                 hintText: "Title",
+                prefixIcon: Icons.title,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 22),
 
               CustomTextField(
                 textEditingController: todoController.descriptionController,
                 hintText: "Description",
                 maxLines: 3,
+                prefixIcon: Icons.description,
               ),
               const SizedBox(height: 16),
 
@@ -37,9 +52,22 @@ class AddTodoPage extends StatelessWidget {
                   value: todoController.selectedCategory.value.isEmpty
                       ? null
                       : todoController.selectedCategory.value,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Category",
-                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.blueAccent,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.blueAccent,
+                        width: 2,
+                      ),
+                    ),
                   ),
                   items: categories
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -55,23 +83,51 @@ class AddTodoPage extends StatelessWidget {
 
               CustomTextField(
                 textEditingController: todoController.startTimeController,
-                hintText: "Start Time",
+                hintText: "Start Date",
+                readOnly: true,
+                prefixIcon: Icons.calendar_today,
+                onTap: () async {
+                  final pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    todoController.startTimeController.text =
+                        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                  }
+                },
               ),
               const SizedBox(height: 16),
 
               CustomTextField(
                 textEditingController: todoController.endTimeController,
-                hintText: "End Time",
+                hintText: "End Date",
+                readOnly: true,
+                prefixIcon: Icons.calendar_today,
+                onTap: () async {
+                  final pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    todoController.endTimeController.text =
+                        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                  }
+                },
               ),
               const SizedBox(height: 24),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
+              Center(
+                child: CustomButton(
+                  text: "Save",
+                  textColor: Colors.white,
                   onPressed: () {
                     todoController.saveTodo();
                   },
-                  child: const Text("Simpan"),
                 ),
               ),
             ],

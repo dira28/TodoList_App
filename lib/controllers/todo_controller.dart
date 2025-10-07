@@ -75,6 +75,7 @@ class TodoController extends GetxController {
     );
   }
 
+  // Tandai todo selesai
   Future<void> markAsDone(int id) async {
     final allTodos = await dbHelper.getTodos();
     final todo = allTodos.firstWhere((t) => t.id == id);
@@ -91,6 +92,7 @@ class TodoController extends GetxController {
     );
   }
 
+  // Hapus todo
   Future<void> deleteTodoAt(int id) async {
     await dbHelper.deleteTodo(id);
     await loadTodos();
