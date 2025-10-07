@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/widget_button.dart';
 
@@ -43,9 +44,11 @@ class ProfilePage extends StatelessWidget {
       confirmTextColor: Colors.white,
       buttonColor: Colors.blueAccent,
       radius: 12,
-      onConfirm: () {
+      onConfirm: () async {
         Get.back();
-        Get.offAllNamed(AppRoutes.login);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        Get.offAllNamed(AppRoutes.splashscreen);
         Get.snackbar(
           "Logged Out",
           "You have successfully logged out",
