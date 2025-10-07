@@ -36,75 +36,71 @@ class TodoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: Colors.blue.shade50, 
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.blue.shade100),
       ),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        todo.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        todo.category,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  todo.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(todo.description),
-                const SizedBox(height: 4),
-                Text(
-                  "${todo.startTime} - ${todo.endTime}",
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ],
-            ),
-          ),
-
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'done') {
-                todoController.markAsDone(todo);
-              } else if (value == 'delete') {
-                showDeleteDialog(context);
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(value: 'done', child: Text("Mark as Done")),
-              const PopupMenuItem(value: 'delete', child: Text("Delete")),
+                child: Text(
+                  todo.category,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'done') {
+                    todoController.markAsDone(todo);
+                  } else if (value == 'delete') {
+                    showDeleteDialog(context);
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                      value: 'done', child: Text("Mark as Done")),
+                  const PopupMenuItem(value: 'delete', child: Text("Delete")),
+                ],
+              ),
             ],
+          ),
+          const SizedBox(height: 6),
+
+          Text(
+            todo.description,
+            style: const TextStyle(color: Colors.black87),
+          ),
+          const SizedBox(height: 6),
+
+          Text(
+            "${todo.startTime} - ${todo.endTime}",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade600,
+            ),
           ),
         ],
       ),
