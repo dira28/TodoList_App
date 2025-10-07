@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_list/controllers/todo_controller.dart';
-import 'package:todo_list/widgets/widget_textfield.dart';
-import 'package:todo_list/widgets/widget_button.dart';
+import '../controllers/todo_controller.dart';
+import '../widgets/widget_textfield.dart';
+import '../widgets/widget_button.dart';
 
 class AddTodoPage extends StatelessWidget {
   AddTodoPage({super.key});
@@ -39,7 +39,6 @@ class AddTodoPage extends StatelessWidget {
               ),
               const SizedBox(height: 22),
 
-              // Description
               CustomTextField(
                 textEditingController: todoController.descriptionController,
                 hintText: "Description",
@@ -57,14 +56,14 @@ class AddTodoPage extends StatelessWidget {
                     labelText: "Category",
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.blueAccent,
                         width: 1.5,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.blueAccent,
                         width: 2,
                       ),
@@ -84,9 +83,9 @@ class AddTodoPage extends StatelessWidget {
 
               CustomTextField(
                 textEditingController: todoController.startTimeController,
-                hintText: "Start Time",
+                hintText: "Start Date",
                 readOnly: true,
-                prefixIcon: Icons.lock_clock,
+                prefixIcon: Icons.calendar_today,
                 onTap: () async {
                   final pickedDate = await showDatePicker(
                     context: context,
@@ -95,21 +94,8 @@ class AddTodoPage extends StatelessWidget {
                     lastDate: DateTime(2100),
                   );
                   if (pickedDate != null) {
-                    final pickedTime = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    if (pickedTime != null) {
-                      final dateTime = DateTime(
-                        pickedDate.year,
-                        pickedDate.month,
-                        pickedDate.day,
-                        pickedTime.hour,
-                        pickedTime.minute,
-                      );
-                      todoController.startTimeController.text =
-                          "${dateTime.day}/${dateTime.month}/${dateTime.year} ${pickedTime.format(context)}";
-                    }
+                    todoController.startTimeController.text =
+                        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                   }
                 },
               ),
@@ -117,9 +103,9 @@ class AddTodoPage extends StatelessWidget {
 
               CustomTextField(
                 textEditingController: todoController.endTimeController,
-                hintText: "End Time",
+                hintText: "End Date",
                 readOnly: true,
-                prefixIcon: Icons.lock_clock,
+                prefixIcon: Icons.calendar_today,
                 onTap: () async {
                   final pickedDate = await showDatePicker(
                     context: context,
@@ -128,21 +114,8 @@ class AddTodoPage extends StatelessWidget {
                     lastDate: DateTime(2100),
                   );
                   if (pickedDate != null) {
-                    final pickedTime = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    if (pickedTime != null) {
-                      final dateTime = DateTime(
-                        pickedDate.year,
-                        pickedDate.month,
-                        pickedDate.day,
-                        pickedTime.hour,
-                        pickedTime.minute,
-                      );
-                      todoController.endTimeController.text =
-                          "${dateTime.day}/${dateTime.month}/${dateTime.year} ${pickedTime.format(context)}";
-                    }
+                    todoController.endTimeController.text =
+                        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                   }
                 },
               ),
