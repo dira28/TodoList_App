@@ -1,95 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../models/todo_model.dart';
 import '../controllers/todo_controller.dart';
+import '../models/todo_model.dart';
+import '../pages/edit_todo_page.dart';
 
 class TodoCard extends StatelessWidget {
   final TodoModel todo;
-  final todoController = Get.find<TodoController>();
+  final int index;
+  final TodoController todoController = Get.find();
 
-  TodoCard({super.key, required this.todo});
+  TodoCard({super.key, required this.todo, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    return Dismissible(
+      key: Key(todo.title + index.toString()),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: const Icon(Icons.delete, color: Colors.white),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        todo.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200, // abu muda bg
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        todo.category,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey, 
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-
-                Text(todo.description),
-                const SizedBox(height: 4),
-
-                Text(
-                  "${todo.startTime} - ${todo.endTime}",
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
+      onDismissed: (_) {
+        todoController.deleteTodoAt(index);
+        Get.snackbar(
+          "Deleted",
+          "Todo '${todo.title}' deleted",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ListTile(
+          title: Text(
+            todo.title,
+            style: TextStyle(
+              decoration: todo.isDone
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
             ),
           ),
+          subtitle: Text(todo.description),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit, color: Colors.blue),
+                onPressed: () {
+                  todoController.fillForm(todo);
+                  Get.to(() => EditTodoPage(todo: todo, index: index));
+                },
+              ),
 
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'done') {
-                final index = todoController.todos.indexOf(todo);
-                if (index != -1) {
+              IconButton(
+                icon: const Icon(Icons.check_circle, color: Colors.green),
+                onPressed: () {
                   todoController.markAsDone(index);
-                }
-              } else if (value == 'delete') {
-                todoController.deleteTodo(todo);
-              }
-            },
-            itemBuilder: (context) => [
-              if (!todo.isDone)
-                const PopupMenuItem(value: 'done', child: Text("Mark as Done")),
-              const PopupMenuItem(value: 'delete', child: Text("Delete")),
+                },
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

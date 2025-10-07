@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/todo_controller.dart';
+import '../models/todo_model.dart';
 import '../widgets/widget_textfield.dart';
 
-class AddTodoPage extends StatelessWidget {
-  AddTodoPage({super.key});
+class EditTodoPage extends StatelessWidget {
+  final TodoModel todo;
+
+  EditTodoPage({super.key, required this.todo});
 
   final TodoController todoController = Get.find<TodoController>();
   final List<String> categories = ['Work', 'Personal', 'Study'];
 
   @override
   Widget build(BuildContext context) {
+    todoController.fillForm(todo);
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Todo")),
+      appBar: AppBar(title: const Text("Edit Todo")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -24,14 +29,12 @@ class AddTodoPage extends StatelessWidget {
                 hintText: "Title",
               ),
               const SizedBox(height: 16),
-
               CustomTextField(
                 textEditingController: todoController.descriptionController,
                 hintText: "Description",
                 maxLines: 3,
               ),
               const SizedBox(height: 16),
-
               Obx(
                 () => DropdownButtonFormField<String>(
                   value: todoController.selectedCategory.value.isEmpty
@@ -52,26 +55,35 @@ class AddTodoPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
               CustomTextField(
                 textEditingController: todoController.startTimeController,
                 hintText: "Start Time",
               ),
               const SizedBox(height: 16),
-
               CustomTextField(
                 textEditingController: todoController.endTimeController,
                 hintText: "End Time",
               ),
               const SizedBox(height: 24),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    todoController.saveTodo();
+                    // pakai id asli todo supaya update tersimpan di DB
+                    final updatedTodo = TodoModel(
+                      id: todo.id,
+                      title: todoController.titleController.text,
+                      description: todoController.descriptionController.text,
+                      category: todoController.selectedCategory.value,
+                      startTime: todoController.startTimeController.text,
+                      endTime: todoController.endTimeController.text,
+                      isDone: todo.isDone,
+                    );
+
+                    todoController.updateTodo(updatedTodo);
+                    todoController.clearForm();
                   },
-                  child: const Text("Simpan"),
+                  child: const Text("Update Todo"),
                 ),
               ),
             ],
