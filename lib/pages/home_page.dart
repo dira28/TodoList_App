@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         elevation: 0,
@@ -35,29 +34,11 @@ class HomePage extends StatelessWidget {
               "There's no tasks yet",
               style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
-
-          ],
-        ),
-        child: Obx(() {
-          if (todoController.todos.isEmpty) {
-            return const Center(
-              child: Text(
-                "There's no tasks yet",
-                style: TextStyle(fontSize: 16, color: Colors.black54),
-              ),
-            );
-          }
-          return ListView.builder(
-            itemCount: todoController.todos.length,
-            itemBuilder: (context, index) {
-              final todo = todoController.todos[index];
-              return TodoCard(todo: todo);
-            },
           );
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16), 
+          padding: const EdgeInsets.all(16),
           itemCount: todoController.todos.length,
           itemBuilder: (context, index) {
             final todo = todoController.todos[index];

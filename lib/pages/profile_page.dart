@@ -44,15 +44,11 @@ class ProfilePage extends StatelessWidget {
       confirmTextColor: Colors.white,
       buttonColor: Colors.blueAccent,
       radius: 12,
-
       onConfirm: () async {
         Get.back();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.clear();
         Get.offAllNamed(AppRoutes.splashscreen);
-      onConfirm: () {
-        Get.back();
-        Get.offAllNamed(AppRoutes.login);
         Get.snackbar(
           "Logged Out",
           "You have successfully logged out",
