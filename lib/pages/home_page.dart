@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_list/pages/widescreen/home_widescreen.dart';
 import '../controllers/todo_controller.dart';
 import '../models/todo_model.dart';
 import '../pages/add_todo_page.dart';
-import '../pages/edit_todo_page.dart';
+import '../widgets/todo_card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
+  final controller = Get.find<TodoController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        controller.updateLayout(constraints);
+        return Obx(
+          () => controller.isMobile.value ? HomeMobile() : HomeWidescreen(),
+        );
+      },
+    );
+  }
+}
+
+class HomeMobile extends StatelessWidget {
+  HomeMobile({super.key});
+
   final todoController = Get.find<TodoController>();
 
   @override
@@ -43,100 +63,7 @@ class HomePage extends StatelessWidget {
               itemCount: todoController.todos.length,
               itemBuilder: (context, index) {
                 final TodoModel todo = todoController.todos[index];
-
-                return Dismissible(
-                  key: Key(todo.id.toString()),
-                  direction: DismissDirection.endToStart,
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Icon(Icons.delete, color: Colors.white),
-                  ),
-                  onDismissed: (_) {
-                    todoController.deleteTodoAt(todo.id!);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                todo.title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.blue.shade100,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                todo.category,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.blueAccent,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.edit, size: 20),
-                              onPressed: () {
-                                todoController.fillForm(todo);
-                                Get.to(() => EditTodoPage(todo: todo));
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                                size: 22,
-                              ),
-                              onPressed: () {
-                                todoController.markAsDone(todo.id!);
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(todo.description),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.access_time,
-                              size: 16,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              "${todo.startTime} - ${todo.endTime}",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return TodoCard(todo: todo);
               },
             );
           }),
@@ -149,7 +76,6 @@ class HomePage extends StatelessWidget {
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -22,6 +22,7 @@ class DashboardPage extends StatelessWidget {
           onTap: (index) => homeController.changePage(index),
           selectedItemColor: Colors.blue.shade800,
           unselectedItemColor: Colors.grey.shade600,
+          backgroundColor: Colors.white,
           showUnselectedLabels: true,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_list/controllers/todo_controller.dart';
+import 'package:todo_list/pages/widescreen/profile_widescreen.dart';
 import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/widget_button.dart';
+
+class ProfilePage extends StatelessWidget {
+  ProfilePage({super.key});
+
+  final controller = Get.find<TodoController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          controller.updateLayout(constraints);
+          return Obx(
+            () => controller.isMobile.value
+                ? ProfileMobile()
+                : ProfileWidescreen(),
+          );
+        },
+      ),
+    );
+  }
+}
 
 class ProfileItem extends StatelessWidget {
   final IconData icon;
@@ -32,8 +56,8 @@ class ProfileItem extends StatelessWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfileMobile extends StatelessWidget {
+  const ProfileMobile({super.key});
 
   void showLogoutDialog(BuildContext context) {
     Get.defaultDialog(
@@ -42,7 +66,7 @@ class ProfilePage extends StatelessWidget {
       textCancel: "No",
       textConfirm: "Yes",
       confirmTextColor: Colors.white,
-      buttonColor: Colors.blueAccent,
+      buttonColor: Colors.red,
       radius: 12,
       onConfirm: () async {
         Get.back();
@@ -78,56 +102,54 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const CircleAvatar(
-                radius: 60,
-                backgroundImage: NetworkImage(
-                  'https://cdn-icons-png.flaticon.com/512/149/149071.png',
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const CircleAvatar(
+              radius: 60,
+              backgroundImage: NetworkImage(
+                'https://cdn-icons-png.flaticon.com/512/149/149071.png',
               ),
-              const SizedBox(height: 16),
-              const Text(
-                "Dira",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 6),
-              const Text(
-                "dira@gmail.com",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              const SizedBox(height: 24),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              "Dira",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              "dira@gmail.com",
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
 
-              // Profile items
-              const ProfileItem(
-                icon: Icons.person,
-                title: "Username",
-                subtitle: "Dira Mayzaro Dekantari",
-              ),
-              const ProfileItem(
-                icon: Icons.email,
-                title: "Email",
-                subtitle: "dira@gmail.com",
-              ),
-              const ProfileItem(
-                icon: Icons.phone,
-                title: "Phone",
-                subtitle: "0812-3456-7890",
-              ),
+            // Profile items
+            const ProfileItem(
+              icon: Icons.person,
+              title: "Username",
+              subtitle: "Dira Mayzaro Dekantari",
+            ),
+            const ProfileItem(
+              icon: Icons.email,
+              title: "Email",
+              subtitle: "dira@gmail.com",
+            ),
+            const ProfileItem(
+              icon: Icons.phone,
+              title: "Phone",
+              subtitle: "0812-3456-7890",
+            ),
 
-              const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-              CustomButton(
-                text: "Logout",
-                textColor: Colors.white,
-                onPressed: () => showLogoutDialog(context),
-              ),
-            ],
-          ),
+            CustomButton(
+              text: "Logout",
+              textColor: Colors.white,
+              onPressed: () => showLogoutDialog(context),
+            ),
+          ],
         ),
       ),
     );

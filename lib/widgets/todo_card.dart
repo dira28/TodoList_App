@@ -6,96 +6,115 @@ import '../pages/edit_todo_page.dart';
 
 class TodoCard extends StatelessWidget {
   final TodoModel todo;
-  final TodoController todoController = Get.find();
-
-  TodoCard({super.key, required this.todo});
-
-  void showDeleteDialog(BuildContext context) {
-    Get.defaultDialog(
-      title: "Delete Task",
-      middleText: "Are you sure you want to delete this Task?",
-      textCancel: "No",
-      textConfirm: "Yes",
-      confirmTextColor: Colors.white,
-      buttonColor: Colors.blueAccent,
-      onConfirm: () {
-        if (todo.id != null) {
-          todoController.deleteTodoAt(todo.id!);
-        }
-        Get.back();
-        Get.snackbar(
-          "Deleted",
-          "Task '${todo.title}' has been deleted",
-          colorText: Colors.black,
-          snackPosition: SnackPosition.TOP,
-          duration: const Duration(seconds: 1),
-        );
-      },
-      onCancel: () {},
-    );
-  }
+  const TodoCard({super.key, required this.todo});
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(todo.id.toString()),
-      direction: DismissDirection.endToStart,
-      background: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
-      onDismissed: (_) {
-        if (todo.id != null) {
-          todoController.deleteTodoAt(todo.id!);
-        }
-        Get.snackbar(
-          "Deleted",
-          "Todo '${todo.title}' deleted",
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      },
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: ListTile(
-          title: Text(
-            todo.title,
-            style: TextStyle(
-              decoration: todo.isDone
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-            ),
+    final todoController = Get.find<TodoController>();
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Dismissible(
+        key: Key(todo.id.toString()),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(12),
           ),
-          subtitle: Column(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: const Icon(Icons.delete, color: Colors.white),
+        ),
+        onDismissed: (_) {
+          todoController.deleteTodoAt(todo.id!);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          // Tambahkan tinggi minimum biar card proporsional
+          constraints: const BoxConstraints(minHeight: 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 🔹 ini bikin kalender selalu di bawah
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(todo.description),
-              const SizedBox(height: 4),
-              Text(
-                "${todo.startTime} - ${todo.endTime}",
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+              // Bagian atas (title, desc, dsb)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          todo.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade100,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          todo.category,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.edit, size: 20),
+                        onPressed: () {
+                          todoController.fillForm(todo);
+                          Get.to(() => EditTodoPage(todo: todo));
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 22,
+                        ),
+                        onPressed: () {
+                          todoController.markAsDone(todo.id!);
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(todo.description),
+                ],
               ),
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit, color: Colors.blue),
-                onPressed: () {
-                  todoController.fillForm(todo);
-                  Get.to(() => EditTodoPage(todo: todo));
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.check_circle, color: Colors.green),
-                onPressed: () {
-                  if (todo.id != null) {
-                    todoController.markAsDone(todo.id!);
-                  }
-                },
+
+              // Bagian bawah (kalender) 🔹
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today,
+                      size: 14,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      "${todo.startTime} - ${todo.endTime}",
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

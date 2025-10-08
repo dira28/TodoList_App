@@ -6,6 +6,11 @@ import 'package:todo_list/routes/routes.dart';
 class AuthController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  var isMobile = true.obs;
+
+  void updateLayout(BoxConstraints constraints) {
+    isMobile.value = constraints.maxWidth < 600;
+  }
 
   void login() async {
     if (emailController.text == 'admin' && passwordController.text == 'admin') {

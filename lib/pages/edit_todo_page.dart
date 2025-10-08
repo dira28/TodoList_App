@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_list/widgets/widget_button.dart';
 import '../controllers/todo_controller.dart';
 import '../models/todo_model.dart';
 import '../widgets/widget_textfield.dart';
@@ -17,7 +18,19 @@ class EditTodoPage extends StatelessWidget {
     todoController.fillForm(todo);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Todo")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          "Add Todo",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        backgroundColor: Colors.lightBlueAccent,
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -40,9 +53,22 @@ class EditTodoPage extends StatelessWidget {
                   value: todoController.selectedCategory.value.isEmpty
                       ? null
                       : todoController.selectedCategory.value,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Category",
-                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.blueAccent,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.blueAccent,
+                        width: 2,
+                      ),
+                    ),
                   ),
                   items: categories
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -65,11 +91,11 @@ class EditTodoPage extends StatelessWidget {
                 hintText: "End Time",
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
+              Center(
+                child: CustomButton(
+                  text: "Save Changes",
+                  textColor: Colors.white,
                   onPressed: () {
-                    // pakai id asli todo supaya update tersimpan di DB
                     final updatedTodo = TodoModel(
                       id: todo.id,
                       title: todoController.titleController.text,
@@ -82,8 +108,12 @@ class EditTodoPage extends StatelessWidget {
 
                     todoController.updateTodo(updatedTodo);
                     todoController.clearForm();
+                    Get.back();
+                    Get.snackbar(
+                      "Updated",
+                      "Todo '${todo.title}' updated successfully",
+                    );
                   },
-                  child: const Text("Update Todo"),
                 ),
               ),
             ],

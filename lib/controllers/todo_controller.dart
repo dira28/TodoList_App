@@ -15,6 +15,12 @@ class TodoController extends GetxController {
 
   final DBHelper dbHelper = DBHelper();
 
+  var isMobile = true.obs;
+
+  void updateLayout(BoxConstraints constraints) {
+    isMobile.value = constraints.maxWidth < 600;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -34,8 +40,7 @@ class TodoController extends GetxController {
       Get.snackbar(
         "Error",
         "Please fill in all fields",
-        colorText: Colors.white,
-        backgroundColor: Colors.red,
+        colorText: Colors.black,
       );
       return;
     }
@@ -54,12 +59,7 @@ class TodoController extends GetxController {
     await loadTodos();
 
     Get.back();
-    Get.snackbar(
-      "Success",
-      "Todo saved successfully",
-      colorText: Colors.white,
-      backgroundColor: Colors.green,
-    );
+    Get.snackbar("Success", "Todo saved successfully", colorText: Colors.black);
   }
 
   Future<void> updateTodo(TodoModel updatedTodo) async {
@@ -70,8 +70,7 @@ class TodoController extends GetxController {
     Get.snackbar(
       "Updated",
       "Todo updated successfully",
-      colorText: Colors.white,
-      backgroundColor: Colors.blueAccent,
+      colorText: Colors.black,
     );
   }
 
@@ -87,8 +86,7 @@ class TodoController extends GetxController {
     Get.snackbar(
       "Completed",
       "${todo.title} marked as done",
-      colorText: Colors.white,
-      backgroundColor: Colors.green,
+      colorText: Colors.black,
     );
   }
 
@@ -99,8 +97,7 @@ class TodoController extends GetxController {
     Get.snackbar(
       "Deleted",
       "Todo deleted successfully",
-      colorText: Colors.white,
-      backgroundColor: Colors.redAccent,
+      colorText: Colors.black,
     );
   }
 
