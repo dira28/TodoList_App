@@ -62,105 +62,104 @@ class ProfileWidescreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.white,
+    appBar: AppBar(
+      backgroundColor: Colors.lightBlueAccent,
+      elevation: 0,
+      centerTitle: true,
+      title: const Text(
+        "Profile",
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+        ),
+      ),
+    ),
+    body: Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1000),
+        child: SingleChildScrollView( 
+          padding: const EdgeInsets.all(24.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start, 
+            children: [
+              Expanded(
+                flex: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircleAvatar(
+                      radius: 80,
+                      backgroundImage: NetworkImage(
+                        'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Dira",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      "dira@gmail.com",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 60),
+
+              Expanded(
+                flex: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const ProfileItemWide(
+                      icon: Icons.person,
+                      title: "Username",
+                      subtitle: "Dira Mayzaro Dekantari",
+                    ),
+                    const ProfileItemWide(
+                      icon: Icons.email,
+                      title: "Email",
+                      subtitle: "dira@gmail.com",
+                    ),
+                    const ProfileItemWide(
+                      icon: Icons.phone,
+                      title: "Phone",
+                      subtitle: "0812-3456-7890",
+                    ),
+                    const SizedBox(height: 30),
+                    Center(
+                      child: SizedBox(
+                        width: 200,
+                        child: CustomButton(
+                          text: "Logout",
+                          textColor: Colors.white,
+                          onPressed: () => showLogoutDialog(context),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1000),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // LEFT SIDE (Profile Picture + Info)
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CircleAvatar(
-                        radius: 80,
-                        backgroundImage: NetworkImage(
-                          'https://cdn-icons-png.flaticon.com/512/149/149071.png',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Dira",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        "dira@gmail.com",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+    ),
+  );
+}
 
-                const SizedBox(width: 60),
-
-                // RIGHT SIDE (Profile Info + Logout Button)
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const ProfileItemWide(
-                        icon: Icons.person,
-                        title: "Username",
-                        subtitle: "Dira Mayzaro Dekantari",
-                      ),
-                      const ProfileItemWide(
-                        icon: Icons.email,
-                        title: "Email",
-                        subtitle: "dira@gmail.com",
-                      ),
-                      const ProfileItemWide(
-                        icon: Icons.phone,
-                        title: "Phone",
-                        subtitle: "0812-3456-7890",
-                      ),
-                      const SizedBox(height: 30),
-                      Center(
-                        child: SizedBox(
-                          width: 200,
-                          child: CustomButton(
-                            text: "Logout",
-                            textColor: Colors.white,
-                            onPressed: () => showLogoutDialog(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
