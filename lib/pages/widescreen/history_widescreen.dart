@@ -24,33 +24,31 @@ class HistoryWidescreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Obx(() {
-          if (todoController.history.isEmpty) {
-            return const Center(
-              child: Text(
-                "There is no history yet",
-                style: TextStyle(fontSize: 16, color: Colors.black54),
-              ),
-            );
-          }
-
-          return GridView.builder(
-            itemCount: todoController.history.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width > 1000 ? 4 : 3,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 1.2,
+      body: Obx(() {
+        if (todoController.history.isEmpty) {
+          return const Center(
+            child: Text(
+              "There is no history yet",
+              style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
-            itemBuilder: (context, index) {
-              final TodoModel todo = todoController.history[index];
-              return _HistoryCard(todo: todo);
-            },
           );
-        }),
-      ),
+        }
+
+        return GridView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: todoController.history.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.of(context).size.width > 1000 ? 4 : 3,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.2,
+          ),
+          itemBuilder: (context, index) {
+            final TodoModel todo = todoController.history[index];
+            return _HistoryCard(todo: todo);
+          },
+        );
+      }),
     );
   }
 }
@@ -122,7 +120,7 @@ class _HistoryCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
+                    color: Colors.blue.shade50,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(

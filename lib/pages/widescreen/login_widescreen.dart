@@ -17,39 +17,26 @@ class LoginWidescreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            padding: const EdgeInsets.all(28),
-            width: 800, // hanya wide
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
+            width: 800,
             child: Row(
               children: [
                 Expanded(
-                  flex: 1,
+                  flex: 35,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.task_alt_rounded,
                         size: 100,
-                        color: Colors.blue.shade800,
+                        color: Colors.white,
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         "Todo List",
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade800,
+                          color: Colors.white,
                         ),
                       ),
                     ],
@@ -59,40 +46,56 @@ class LoginWidescreen extends StatelessWidget {
                 const SizedBox(width: 40),
 
                 Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Login to your account",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black54,
+                  flex: 65,
+                  child: Container(
+                    padding: const EdgeInsets.all(28),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      CustomTextField(
-                        textEditingController: authController.emailController,
-                        hintText: "Enter Email",
-                        prefixIcon: Icons.person,
-                      ),
-                      const SizedBox(height: 20),
-                      CustomTextField(
-                        textEditingController: authController.passwordController,
-                        hintText: "Enter Password",
-                        obscureText: true,
-                        prefixIcon: Icons.lock,
-                      ),
-                      const SizedBox(height: 35),
-                      SizedBox(
-                        width: double.infinity,
-                        child: CustomButton(
-                          text: "Login",
-                          textColor: Colors.white,
-                          onPressed: () => authController.login(),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Login to your account",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black54,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          textEditingController:
+                              authController.emailController,
+                          hintText: "Enter Email",
+                          prefixIcon: Icons.person,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          textEditingController:
+                              authController.passwordController,
+                          hintText: "Enter Password",
+                          obscureText: true,
+                          prefixIcon: Icons.lock,
+                        ),
+                        const SizedBox(height: 35),
+                        SizedBox(
+                          child: CustomButton(
+                            text: "Login",
+                            textColor: Colors.white,
+                            onPressed: () => authController.login(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

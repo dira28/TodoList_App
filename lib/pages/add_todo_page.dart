@@ -12,6 +12,7 @@ class AddTodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    todoController.clearForm();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,9 +27,9 @@ class AddTodoPage extends StatelessWidget {
         backgroundColor: Colors.lightBlueAccent,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,24 +54,45 @@ class AddTodoPage extends StatelessWidget {
                       ? null
                       : todoController.selectedCategory.value,
                   decoration: InputDecoration(
-                    labelText: "Category",
+                    hintText: "Select Category",
+                    prefixIcon: Icon(
+                      Icons.category,
+                      color: Colors.blue.shade700,
+                    ),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 12,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.blue.shade700),
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Colors.blueAccent,
-                        width: 1.5,
-                      ),
+                      borderSide: BorderSide(color: Colors.blue.shade700),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Colors.blueAccent,
+                      borderSide: BorderSide(
+                        color: Colors.blue.shade900,
                         width: 2,
                       ),
                     ),
                   ),
+                  dropdownColor: Colors.blue.shade50,
+                  iconEnabledColor: Colors.blue.shade700,
                   items: categories
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) {
@@ -79,6 +101,7 @@ class AddTodoPage extends StatelessWidget {
                   },
                 ),
               ),
+
               const SizedBox(height: 16),
 
               CustomTextField(

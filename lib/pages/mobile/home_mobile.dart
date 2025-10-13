@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list/controllers/todo_controller.dart';
-import 'package:todo_list/models/todo_model.dart';
-import 'package:todo_list/pages/add_todo_page.dart';
+import 'package:todo_list/routes/routes.dart';
 import 'package:todo_list/widgets/todo_card.dart';
 
-class HomeWidescreen extends StatelessWidget {
-  HomeWidescreen({super.key});
+class HomeMobile extends StatelessWidget {
+  HomeMobile({super.key});
 
   final todoController = Get.find<TodoController>();
 
@@ -14,6 +13,7 @@ class HomeWidescreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         elevation: 0,
@@ -27,27 +27,22 @@ class HomeWidescreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+
       body: Obx(() {
         if (todoController.todos.isEmpty) {
           return const Center(
             child: Text(
-              "No tasks yet",
+              "There's no tasks yet",
               style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
           );
         }
 
-        return GridView.builder(
+        return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: todoController.todos.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 1.1,
-          ),
           itemBuilder: (context, index) {
-            final TodoModel todo = todoController.todos[index];
+            final todo = todoController.todos[index];
             return TodoCard(todo: todo);
           },
         );
@@ -56,10 +51,11 @@ class HomeWidescreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue.shade600,
         onPressed: () {
-          Get.to(() => AddTodoPage());
+          Get.toNamed(AppRoutes.addTodo);
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

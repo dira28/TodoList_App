@@ -35,13 +35,11 @@ class TodoCard extends StatelessWidget {
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(10),
           ),
-          // Tambahkan tinggi minimum biar card proporsional
           constraints: const BoxConstraints(minHeight: 100),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 🔹 ini bikin kalender selalu di bawah
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Bagian atas (title, desc, dsb)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -97,7 +95,6 @@ class TodoCard extends StatelessWidget {
                 ],
               ),
 
-              // Bagian bawah (kalender) 🔹
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Row(
